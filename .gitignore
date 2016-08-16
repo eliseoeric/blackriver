@@ -1,4 +1,5 @@
 .idea/*
 vendor/
 wp/
-!wp/wp-content/themes/blackriver
+!wp/wp-content/
+!wp/wp-content/themes/blackriver/
