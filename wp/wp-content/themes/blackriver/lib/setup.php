@@ -2,6 +2,7 @@
 
 namespace Roots\Sage\Setup;
 
+use Blackriver\Container\Blackriver_Container;
 use Roots\Sage\Assets;
 
 /**
@@ -47,6 +48,23 @@ function setup() {
   // Use main stylesheet for visual editor
   // To add custom styles edit /assets/styles/layouts/_tinymce.scss
   add_editor_style(Assets\asset_path('styles/main.css'));
+
+  //todo - move the above code into a container init or some sort of boot service provider
+  $container = new Blackriver_Container(); // create the container
+  $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
+  $container['url'] = get_template_directory();
+  $container['version'] = "0.5.0";
+  $container['settings_page_props'] = array(
+      'parent_slug' => 'options-general.php',
+      'page_title' => 'Blackriver',
+      'menu_title' => 'Blackriver',
+      'capability' => 'manage_options',
+      'menu_slug' => 'blackriver-settings',
+      'option_group' => 'blackriver_option_group',
+      'option_name' => 'blackriver_option_name'
+  );
+  $container['settings_page'] = new Blackriver_SettingsPage( $container['settings_page_props'] );
+  $container->run();
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
