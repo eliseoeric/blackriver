@@ -1,0 +1,15 @@
+{
+  "require": {
+    "php": ">=5.4",
+    "twig/twig": "1.24.0",
+    "johnpbloch/wordpress": "4.5.3",
+    "roots/sage": "^8.4"
+  },
+  "extra": {
+    "wordpress-install-dir": "wp",
+    "installer-paths": {
+      "wp/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+      "wp/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+    }
+  }
+}
