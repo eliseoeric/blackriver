@@ -1,4 +1,28 @@
 .idea/*
 vendor/
+!.gitignore
+!README.md
 wp/*
+!wp/wp-content/
+
+# Ignore everything in the "wp-content" directory, except the "plugins", "mu-plugins",
+# and "themes" directories.
+wp/wp-content/*
+# !wp-content/mu-plugins/
+# !wp-content/plugins/
+!wp/wp-content/themes/
+
+# Ignore everything in the "mu-plugins" directory, except the mu-plugins you
+# specify (see the commented-out examples for hints on how to do this.)
+# !wp-content/mu-plugins/my-plugin.php
+wp/wp-content/mu-plugins/*
+
+# Ignore everything in the "plugins" directory, except the plugins you
+# specify (see the commented-out examples for hints on how to do this.)
+# !wp-content/plugins/my-plugin.php
+wp/wp-content/plugins/*
+
+# Ignore everything in the "themes" directory, except the themes you
+# specify (see the commented-out example for a hint on how to do this.)
+wp/wp-content/themes/*
 !wp/wp-content/themes/blackriver/
