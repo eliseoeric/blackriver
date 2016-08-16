@@ -26,3 +26,14 @@ foreach ($sage_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
+
+// Being autoloading code
+//todo: Take the sage code above and factor it into the autoloader
+spl_autoload_register( 'blackriver_autoloader' );
+function blackriver_autoloader( $class_name ) {
+  if ( false !== strpos( $class_name, 'Blackriver' ) ) {
+    $classes_dir = realpath( get_template_directory_uri() . __FILE__ ) .DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+    $class_file = str_replace( '_', DIRECTORY_SEPARATOR, $class_name ) . '.php';
+    require_once $classes_dir . $class_file;
+  }
+}
