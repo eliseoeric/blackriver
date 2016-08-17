@@ -3,8 +3,7 @@
     "php": ">=5.4",
     "twig/twig": "1.24.0",
     "johnpbloch/wordpress": "4.5.3",
-    "webdevstudios/cmb2",
-    "roots/sage": "^8.4"
+    "roots/sage": "^8.4",
   },
   "extra": {
     "wordpress-install-dir": "wp",

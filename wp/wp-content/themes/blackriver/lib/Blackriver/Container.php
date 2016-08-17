@@ -1,10 +1,10 @@
 <?php
-namespace Blackriver\Container;
-//todo this namespacing may be incorrect - we will need to test
+namespace Blackriver;
+
 use ArrayAccess;
 use ReflectionClass;
 
-class Blackriver_Container implements ArrayAccess {
+class Container implements ArrayAccess {
 
 	protected $contents;
 
@@ -85,7 +85,7 @@ class Blackriver_Container implements ArrayAccess {
 	/**
 	 * test
 	 */
-	public function run()
+	public function boot()
 	{
 		foreach ( $this->contents() as $key => $content )
 		{
@@ -97,9 +97,9 @@ class Blackriver_Container implements ArrayAccess {
 			if( is_object( $content ) )
 			{
 				$reflection = new ReflectionClass( $content );
-				if( $reflection->hasMethod( 'run' ) )
+				if( $reflection->hasMethod( 'boot' ) )
 				{
-					$content->run(); // Call run method on object
+					$content->boot(); // Call run method on object
 				}
 			}
 		}

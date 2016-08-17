@@ -2,13 +2,42 @@
 
 namespace Roots\Sage\Setup;
 
-use Blackriver\Container\Blackriver_Container;
+use Blackriver\Container;
+use Blackriver\SettingsPage;
 use Roots\Sage\Assets;
 
 /**
  * Theme setup
  */
 function setup() {
+
+  //todo - move the above code into a container init or some sort of boot service provider
+  $container = new Container(); // create the container
+  $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
+  $container['url'] = get_template_directory();
+  $container['version'] = "0.5.0";
+  // Config for the container go here
+  $container['settings_page_props'] = array(
+      'parent_slug' => 'options-general.php',
+      'page_title' => 'Blackriver',
+      'menu_title' => 'Blackriver',
+      'capability' => 'manage_options',
+      'menu_slug' => 'blackriver-settings',
+      'option_group' => 'blackriver_option_group',
+      'option_name' => 'blackriver_option_name'
+  );
+
+  //pseudo service provider
+  //todo create a service provider class
+  $container['settings_page'] = function( $container ) {
+    return new SettingsPage( $container['settings_page'] );
+  };
+
+  $container->boot();
+
+  //todo lets get the service provider setup here
+
+
   // Enable features from Soil when plugin is activated
   // https://roots.io/plugins/soil/
   add_theme_support('soil-clean-up');
@@ -49,22 +78,7 @@ function setup() {
   // To add custom styles edit /assets/styles/layouts/_tinymce.scss
   add_editor_style(Assets\asset_path('styles/main.css'));
 
-  //todo - move the above code into a container init or some sort of boot service provider
-  $container = new Blackriver_Container(); // create the container
-  $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
-  $container['url'] = get_template_directory();
-  $container['version'] = "0.5.0";
-  $container['settings_page_props'] = array(
-      'parent_slug' => 'options-general.php',
-      'page_title' => 'Blackriver',
-      'menu_title' => 'Blackriver',
-      'capability' => 'manage_options',
-      'menu_slug' => 'blackriver-settings',
-      'option_group' => 'blackriver_option_group',
-      'option_name' => 'blackriver_option_name'
-  );
-  $container['settings_page'] = new Blackriver_SettingsPage( $container['settings_page_props'] );
-  $container->run();
+
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 

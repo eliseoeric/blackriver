@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "567e02cd25df87f7dd170727462b0c2f",
-    "content-hash": "2804549fb50b7e55aa2ccc474ae3735d",
+    "hash": "b0c1618976914e62de82717d7920a3cb",
+    "content-hash": "c5f45d38ce60e99b9f02ba30755cc050",
     "packages": [
         {
             "name": "composer/installers",
@@ -296,6 +296,51 @@
                 "templating"
             ],
             "time": "2016-01-25 21:22:18"
+        },
+        {
+            "name": "webdevstudios/cmb2",
+            "version": "v2.2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WebDevStudios/CMB2.git",
+                "reference": "17d60c71f9f6b27f0e1ab2bbbaae2e5da2ffa7b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WebDevStudios/CMB2/zipball/17d60c71f9f6b27f0e1ab2bbbaae2e5da2ffa7b9",
+                "reference": "17d60c71f9f6b27f0e1ab2bbbaae2e5da2ffa7b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "WebDevStudios",
+                    "email": "contact@webdevstudios.com",
+                    "homepage": "https://github.com/WebDevStudios",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CMB2 is a metabox, custom fields, and forms library for WordPress that will blow your mind.",
+            "homepage": "https://github.com/WebDevStudios/CMB2",
+            "keywords": [
+                "metabox",
+                "plugin",
+                "wordpress"
+            ],
+            "time": "2016-06-28 01:27:39"
         }
     ],
     "packages-dev": [],

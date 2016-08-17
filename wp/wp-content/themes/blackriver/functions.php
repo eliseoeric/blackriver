@@ -9,6 +9,7 @@
  *
  * @link https://github.com/roots/sage/pull/1042
  */
+//todo turn this into a service provider list
 $sage_includes = [
   'lib/assets.php',    // Scripts and stylesheets
   'lib/extras.php',    // Custom functions
@@ -27,13 +28,21 @@ foreach ($sage_includes as $file) {
 }
 unset($file, $filepath);
 
+
+//todo move the CMB2 include stuff somewhere better
+if ( file_exists(  __DIR__ . '/lib/cmb2/init.php' ) ) {
+  require_once  __DIR__ . '/lib/cmb2/init.php';
+} elseif ( file_exists(  __DIR__ . '/lib/CMB2/init.php' ) ) {
+  require_once  __DIR__ . '/lib/CMB2/init.php';
+}
+
 // Being autoloading code
 //todo: Take the sage code above and factor it into the autoloader
 spl_autoload_register( 'blackriver_autoloader' );
 function blackriver_autoloader( $class_name ) {
   if ( false !== strpos( $class_name, 'Blackriver' ) ) {
     $classes_dir = realpath( get_template_directory_uri() . __FILE__ ) .DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
-    $class_file = str_replace( '_', DIRECTORY_SEPARATOR, $class_name ) . '.php';
+    $class_file = str_replace( '\\', DIRECTORY_SEPARATOR, $class_name ) . '.php';
     require_once $classes_dir . $class_file;
   }
 }
