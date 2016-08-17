@@ -1,4 +1,15 @@
 <?php
+
+
+if( ! function_exists( 'dd' ) ) {
+  function dd( $var ) {
+    echo "<pre>";
+    var_dump( $var );
+    echo "</pre>";
+  }
+}
+
+
 /**
  * Sage includes
  *
@@ -11,12 +22,12 @@
  */
 //todo turn this into a service provider list
 $sage_includes = [
-  'lib/assets.php',    // Scripts and stylesheets
-  'lib/extras.php',    // Custom functions
+  'modules/assets.php',    // Scripts and stylesheets
+  'modules/extras.php',    // Custom functions
   'lib/setup.php',     // Theme setup
-  'lib/titles.php',    // Page titles
-  'lib/wrapper.php',   // Theme wrapper class
-  'lib/customizer.php' // Theme customizer
+  'modules/titles.php',    // Page titles
+  'modules/wrapper.php',   // Theme wrapper class
+  'modules/customizer.php' // Theme customizer
 ];
 
 foreach ($sage_includes as $file) {
@@ -41,7 +52,7 @@ if ( file_exists(  __DIR__ . '/lib/cmb2/init.php' ) ) {
 spl_autoload_register( 'blackriver_autoloader' );
 function blackriver_autoloader( $class_name ) {
   if ( false !== strpos( $class_name, 'Blackriver' ) ) {
-    $classes_dir = realpath( get_template_directory_uri() . __FILE__ ) .DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+    $classes_dir = realpath( get_template_directory_uri() . __FILE__ ) .DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
     $class_file = str_replace( '\\', DIRECTORY_SEPARATOR, $class_name ) . '.php';
     require_once $classes_dir . $class_file;
   }

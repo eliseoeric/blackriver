@@ -2,6 +2,7 @@
 namespace Blackriver;
 
 use ArrayAccess;
+use Closure;
 use ReflectionClass;
 
 class Container implements ArrayAccess {
@@ -41,7 +42,9 @@ class Container implements ArrayAccess {
 	 */
 	public function offsetGet( $offset )
 	{
-		if( is_callable( $this->contents[ $offset ] ) )
+
+		//todo need to set this up to use the shared() method
+		if( is_callable( $this->contents['concrete'][ $offset ] ) )
 		{
 			return call_user_func( $this->contents[ $offset ], $this );
 		}
@@ -82,12 +85,37 @@ class Container implements ArrayAccess {
 		unset( $this->contents[ $offset ] );
 	}
 
+	public function singleton( $abstract, $concrete = null )
+	{
+		$this->bind( $abstract, $concrete, true );
+	}
+
+	public function bind( $abstract, $concrete = null, $shared = false )
+	{
+		$this->contents[$abstract] = compact('concrete', 'shared');
+
+	}
+
+	public function share( Closure $closure )
+	{
+		return function ($container) use ($closure) {
+			static $object;
+
+			if( is_null( $object ))
+			{
+				$object = $closure($container);
+			}
+
+			return $object;
+		};
+	}
+
 	/**
 	 * test
 	 */
 	public function boot()
 	{
-		foreach ( $this->contents() as $key => $content )
+		foreach ( $this->contents as $key => $content )
 		{
 			//loop through the contents
 			if( is_callable( $content ) )

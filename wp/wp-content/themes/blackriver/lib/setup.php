@@ -2,6 +2,7 @@
 
 namespace Roots\Sage\Setup;
 
+use Blackriver\Admin\SettingsPageProvider;
 use Blackriver\Container;
 use Blackriver\SettingsPage;
 use Roots\Sage\Assets;
@@ -16,23 +17,18 @@ function setup() {
   $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
   $container['url'] = get_template_directory();
   $container['version'] = "0.5.0";
-  // Config for the container go here
-  $container['settings_page_props'] = array(
-      'parent_slug' => 'options-general.php',
-      'page_title' => 'Blackriver',
-      'menu_title' => 'Blackriver',
-      'capability' => 'manage_options',
-      'menu_slug' => 'blackriver-settings',
-      'option_group' => 'blackriver_option_group',
-      'option_name' => 'blackriver_option_name'
-  );
 
   //pseudo service provider
   //todo create a service provider class
-  $container['settings_page'] = function( $container ) {
-    return new SettingsPage( $container['settings_page'] );
-  };
+  $service_providers = array(
+    'settings_page' => SettingsPageProvider::class
+  );
 
+  foreach( $service_providers as $service_provider => $provider_class )
+  {
+    $object = new $provider_class( $container );
+    $object->register();
+  }
   $container->boot();
 
   //todo lets get the service provider setup here

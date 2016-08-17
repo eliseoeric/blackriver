@@ -1,5 +1,5 @@
 <?php
-namespace Blackriver;
+namespace Blackriver\Admin;
 
 abstract class WpSubPage{
 	protected $settings_page_props;
@@ -16,12 +16,12 @@ abstract class WpSubPage{
 		$this->metabox_id = $settings_page_props['metabox_id'];
 	}
 
-	public function boot()
-	{
-		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
-	}
+//	public function boot()
+//	{
+//		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
+//		add_action( 'admin_init', array( $this, 'register_settings' ) );
+//		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
+//	}
 
 	public function  add_menu_and_page()
 	{
@@ -89,12 +89,12 @@ abstract class WpSubPage{
 	public function __get( $field )
 	{
 		// Allowed fields to be retrieved
-		if( in_array( $field, array( 'key', 'metabox_id', 'title', 'options_page' ), true ) )
+		if( in_array( $field, array( 'metabox_id', 'title', 'options_page', 'menu_slug' ), true ) )
 		{
 			return $this->{$field};
 		}
 
-		throw new \Exception( 'Invalid Property'  . $field );
+		throw new \Exception( 'Invalid Property '  . $field );
 
 	}
 

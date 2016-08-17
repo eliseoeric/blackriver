@@ -1,9 +1,9 @@
 <?php
 
-namespace Blackriver;
-use Blackriver\WpSubPage;
+namespace Blackriver\Admin;
+use Blackriver\Admin\WpSubPage;
 
-class SettingsPage extends Blackriver_WpSubPage {
+class SettingsPage extends WpSubPage {
 
 	public function add_options_page_metabox()
 	{
