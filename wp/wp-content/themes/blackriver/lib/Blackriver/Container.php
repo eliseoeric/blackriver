@@ -8,10 +8,102 @@ use ReflectionClass;
 class Container implements ArrayAccess {
 
 	protected $contents;
+	protected $bindings;
+	protected $instances;
 
 	public function __construct()
 	{
 		$this->contents = array();
+		$this->bindings = array();
+		$this->instances = array();
+	}
+
+	/**
+	 * Bind a single instance to the container
+	 *
+	 * @param $abstract
+	 * @param null $concrete
+	 */
+	public function singleton( $abstract, $concrete = null )
+	{
+		$this->bind( $abstract, $concrete, true );
+	}
+
+	/**
+	 * Bind instance to container
+	 *
+	 * @param $abstract
+	 * @param null $concrete
+	 * @param bool $shared
+	 */
+	public function bind( $abstract, $concrete = null, $shared = false )
+	{
+		$this->bindings[$abstract] = compact('concrete', 'shared');
+//		$this->contents[$abstract] = $concrete;
+	}
+
+//	public function share( Closure $closure )
+//	{
+//		return function ($container) use ($closure) {
+//			static $object;
+//
+//			if( is_null( $object ))
+//			{
+//				$object = $closure($container);
+//			}
+//
+//			return $object;
+//		};
+//	}
+
+
+	protected function getConcrete($abstract)
+	{
+		return $this->bindings[$abstract]['concrete'];
+	}
+
+	/**
+	 * test
+	 */
+	public function boot()
+	{
+		foreach ( $this->bindings as $abstract => $content )
+		{
+			if( !$content instanceof Closure )
+			{
+				$content = $this->getConcrete($abstract); // so now we have a closure
+			}
+
+			$this->instances[$abstract] = $content; // add the closure to the instances array
+			$this->make( $abstract, $content ); //send the closure to Container::make();
+
+//			// if the content is a closure/service provider
+//			if( is_array( $content ) && in_array( 'concrete', $content ) )
+//			{
+//				// get the closure from the content
+//				$concrete = $this->getConcrete( $abstract, $content );
+//				// load the provider
+//				$this->make( $abstract, $concrete );
+//			}
+		}
+	}
+
+	// $content here is a closure
+	public function make( $abstract, $content )
+	{
+		if( is_callable( $content) )
+		{
+			// we know that the $content is a closure, so let's call it and get the instance
+			$content = call_user_func( $this->instances[ $abstract ], $this ); // this is the key
+		}
+
+		if( is_object( $content) )
+		{
+			$reflection = new ReflectionClass( $content ); // should return ["name"] => "Blackriver\Admin\SettingsPage"
+			if( $reflection->hasMethod( 'boot' ) ) {
+				$content->boot();
+			}
+		}
 	}
 
 	/**
@@ -42,12 +134,15 @@ class Container implements ArrayAccess {
 	 */
 	public function offsetGet( $offset )
 	{
-
+		dd( 'getting offset' );
 		//todo need to set this up to use the shared() method
-		if( is_callable( $this->contents['concrete'][ $offset ] ) )
+		// todo - make a get closure function that takes the $this->contents[$offset] and returns $this->contents[$offset]['concrete']
+		//Check if the $offset is a bindings, if so get the binding
+		if( is_callable( $this->contents[ $offset ] ) )
 		{
 			return call_user_func( $this->contents[ $offset ], $this );
 		}
+		// Otherwise, get the content $offset
 		return isset( $this->contents[ $offset ] ) ? $this->contents[ $offset ] : null;
 	}
 
@@ -85,51 +180,5 @@ class Container implements ArrayAccess {
 		unset( $this->contents[ $offset ] );
 	}
 
-	public function singleton( $abstract, $concrete = null )
-	{
-		$this->bind( $abstract, $concrete, true );
-	}
 
-	public function bind( $abstract, $concrete = null, $shared = false )
-	{
-		$this->contents[$abstract] = compact('concrete', 'shared');
-
-	}
-
-	public function share( Closure $closure )
-	{
-		return function ($container) use ($closure) {
-			static $object;
-
-			if( is_null( $object ))
-			{
-				$object = $closure($container);
-			}
-
-			return $object;
-		};
-	}
-
-	/**
-	 * test
-	 */
-	public function boot()
-	{
-		foreach ( $this->contents as $key => $content )
-		{
-			//loop through the contents
-			if( is_callable( $content ) )
-			{
-				$content = $this[ $key ];
-			}
-			if( is_object( $content ) )
-			{
-				$reflection = new ReflectionClass( $content );
-				if( $reflection->hasMethod( 'boot' ) )
-				{
-					$content->boot(); // Call run method on object
-				}
-			}
-		}
-	}
 }

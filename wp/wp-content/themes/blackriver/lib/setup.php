@@ -14,8 +14,8 @@ function setup() {
 
   //todo - move the above code into a container init or some sort of boot service provider
   $container = new Container(); // create the container
-  $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
-  $container['url'] = get_template_directory();
+  $container['path'] = realpath( get_template_directory() ) . DIRECTORY_SEPARATOR;
+  $container['url'] = get_template_directory_uri();
   $container['version'] = "0.5.0";
 
   //pseudo service provider
@@ -28,6 +28,7 @@ function setup() {
   {
     $object = new $provider_class( $container );
     $object->register();
+//    $object->boot();
   }
   $container->boot();
 

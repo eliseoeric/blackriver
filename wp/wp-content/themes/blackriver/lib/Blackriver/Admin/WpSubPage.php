@@ -16,12 +16,12 @@ abstract class WpSubPage{
 		$this->metabox_id = $settings_page_props['metabox_id'];
 	}
 
-//	public function boot()
-//	{
-//		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
-//		add_action( 'admin_init', array( $this, 'register_settings' ) );
-//		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
-//	}
+	public function boot()
+	{
+		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
+	}
 
 	public function  add_menu_and_page()
 	{
