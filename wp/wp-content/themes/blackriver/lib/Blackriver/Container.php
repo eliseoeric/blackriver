@@ -39,22 +39,22 @@ class Container implements ArrayAccess {
 	public function bind( $abstract, $concrete = null, $shared = false )
 	{
 		$this->bindings[$abstract] = compact('concrete', 'shared');
-//		$this->contents[$abstract] = $concrete;
 	}
 
-//	public function share( Closure $closure )
-//	{
-//		return function ($container) use ($closure) {
-//			static $object;
-//
-//			if( is_null( $object ))
-//			{
-//				$object = $closure($container);
-//			}
-//
-//			return $object;
-//		};
-//	}
+	// todo - need to implement the share method for objects that should be shared
+	public function share( Closure $closure )
+	{
+		return function ($container) use ($closure) {
+			static $object;
+
+			if( is_null( $object ))
+			{
+				$object = $closure($container);
+			}
+
+			return $object;
+		};
+	}
 
 
 	protected function getConcrete($abstract)
@@ -77,14 +77,6 @@ class Container implements ArrayAccess {
 			$this->instances[$abstract] = $content; // add the closure to the instances array
 			$this->make( $abstract, $content ); //send the closure to Container::make();
 
-//			// if the content is a closure/service provider
-//			if( is_array( $content ) && in_array( 'concrete', $content ) )
-//			{
-//				// get the closure from the content
-//				$concrete = $this->getConcrete( $abstract, $content );
-//				// load the provider
-//				$this->make( $abstract, $concrete );
-//			}
 		}
 	}
 

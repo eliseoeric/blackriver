@@ -24,7 +24,7 @@ if( ! function_exists( 'dd' ) ) {
 $sage_includes = [
   'modules/assets.php',    // Scripts and stylesheets
   'modules/extras.php',    // Custom functions
-  'lib/setup.php',     // Theme setup
+  'lib/bootstrap.php',     // Theme setup
   'modules/titles.php',    // Page titles
   'modules/wrapper.php',   // Theme wrapper class
   'modules/customizer.php' // Theme customizer

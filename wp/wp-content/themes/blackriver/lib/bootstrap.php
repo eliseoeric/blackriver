@@ -4,7 +4,6 @@ namespace Roots\Sage\Setup;
 
 use Blackriver\Admin\SettingsPageProvider;
 use Blackriver\Container;
-use Blackriver\SettingsPage;
 use Roots\Sage\Assets;
 
 /**
@@ -31,7 +30,6 @@ function setup() {
 //    $object->boot();
   }
   $container->boot();
-
   //todo lets get the service provider setup here
 
 
