@@ -4,7 +4,6 @@ namespace Roots\Sage\Setup;
 
 use Blackriver\Admin\SettingsPageProvider;
 use Blackriver\Container;
-use Blackriver\SettingsPage;
 use Roots\Sage\Assets;
 
 /**
@@ -14,23 +13,23 @@ function setup() {
 
   //todo - move the above code into a container init or some sort of boot service provider
   $container = new Container(); // create the container
-  $container['path'] = realpath( get_template_directory_uri() ) . DIRECTORY_SEPARATOR;
-  $container['url'] = get_template_directory();
+  $container['path'] = realpath( get_template_directory() ) . DIRECTORY_SEPARATOR;
+  $container['url'] = get_template_directory_uri();
   $container['version'] = "0.5.0";
 
   //pseudo service provider
   //todo create a service provider class
   $service_providers = array(
-    'settings_page' => SettingsPageProvider::class
+      'settings_page' => SettingsPageProvider::class
   );
 
   foreach( $service_providers as $service_provider => $provider_class )
   {
     $object = new $provider_class( $container );
     $object->register();
-    }
+//    $object->boot();
+  }
   $container->boot();
-
   //todo lets get the service provider setup here
 
 
@@ -53,7 +52,7 @@ function setup() {
   // Register wp_nav_menu() menus
   // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus([
-    'primary_navigation' => __('Primary Navigation', 'sage')
+      'primary_navigation' => __('Primary Navigation', 'sage')
   ]);
 
   // Enable post thumbnails
@@ -83,21 +82,21 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
  */
 function widgets_init() {
   register_sidebar([
-    'name'          => __('Primary', 'sage'),
-    'id'            => 'sidebar-primary',
-    'before_widget' => '<section class="widget %1$s %2$s">',
-    'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
-    'after_title'   => '</h3>'
+      'name'          => __('Primary', 'sage'),
+      'id'            => 'sidebar-primary',
+      'before_widget' => '<section class="widget %1$s %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h3>',
+      'after_title'   => '</h3>'
   ]);
 
   register_sidebar([
-    'name'          => __('Footer', 'sage'),
-    'id'            => 'sidebar-footer',
-    'before_widget' => '<section class="widget %1$s %2$s">',
-    'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
-    'after_title'   => '</h3>'
+      'name'          => __('Footer', 'sage'),
+      'id'            => 'sidebar-footer',
+      'before_widget' => '<section class="widget %1$s %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h3>',
+      'after_title'   => '</h3>'
   ]);
 }
 add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
@@ -111,9 +110,9 @@ function display_sidebar() {
   isset($display) || $display = !in_array(true, [
     // The sidebar will NOT be displayed if ANY of the following return true.
     // @link https://codex.wordpress.org/Conditional_Tags
-    is_404(),
-    is_front_page(),
-    is_page_template('template-custom.php'),
+      is_404(),
+      is_front_page(),
+      is_page_template('template-custom.php'),
   ]);
 
   return apply_filters('sage/display_sidebar', $display);

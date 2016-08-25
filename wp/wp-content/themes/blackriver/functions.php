@@ -24,7 +24,7 @@ if( ! function_exists( 'dd' ) ) {
 $sage_includes = [
   'modules/assets.php',    // Scripts and stylesheets
   'modules/extras.php',    // Custom functions
-  'lib/setup.php',     // Theme setup
+  'lib/bootstrap.php',     // Theme setup
   'modules/titles.php',    // Page titles
   'modules/wrapper.php',   // Theme wrapper class
   'modules/customizer.php' // Theme customizer
@@ -47,12 +47,12 @@ if ( file_exists(  __DIR__ . '/lib/cmb2/init.php' ) ) {
   require_once  __DIR__ . '/lib/CMB2/init.php';
 }
 
-// Being autoloading code
+// Begin autoloading code
 //todo: Take the sage code above and factor it into the autoloader
 spl_autoload_register( 'blackriver_autoloader' );
 function blackriver_autoloader( $class_name ) {
   if ( false !== strpos( $class_name, 'Blackriver' ) ) {
-    $classes_dir = realpath( get_template_directory_uri() . __FILE__ ) .DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
+    $classes_dir = realpath( get_template_directory() ) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
     $class_file = str_replace( '\\', DIRECTORY_SEPARATOR, $class_name ) . '.php';
     require_once $classes_dir . $class_file;
   }

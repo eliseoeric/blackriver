@@ -1,7 +1,6 @@
 <?php
 
 namespace Blackriver\Admin;
-use Blackriver\Admin\WpSubPage;
 
 class SettingsPage extends WpSubPage {
 

@@ -9,7 +9,7 @@ class SettingsPageProvider extends ServiceProvider{
 
 	public function boot()
 	{
-
+		dd("Hello from SettingsPageProvider::boot!");
 	}
 	/**
 	 * Register the service provider
@@ -18,7 +18,8 @@ class SettingsPageProvider extends ServiceProvider{
 	public function register( )
 	{
 		$this->container->singleton( 'settings_page', function( $app ){
-			return new SettingsPage(array(
+			return new SettingsPage( array(
+				'is_parent' => true,
 				'parent_slug' => 'options-general.php',
 				'page_title' => 'Blackriver',
 				'menu_title' => 'Blackriver',
@@ -27,7 +28,7 @@ class SettingsPageProvider extends ServiceProvider{
 				'option_group' => 'blackriver_option_group',
 				'option_name' => 'blackriver_option_name',
 				'metabox_id' => 'blackriver_metabox'
-			));
+			) );
 		});
 	}
 }
