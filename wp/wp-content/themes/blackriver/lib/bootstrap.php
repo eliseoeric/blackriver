@@ -5,6 +5,7 @@ namespace Roots\Sage\Setup;
 use Blackriver\Admin\SettingsPageProvider;
 use Blackriver\providers\ExtensionControllerProvider;
 use Blackriver\Container;
+use Blackriver\providers\MetaboxControllerProvider;
 use Roots\Sage\Assets;
 
 /**
@@ -23,6 +24,7 @@ function setup() {
   $service_providers = array(
       'settings_page' => SettingsPageProvider::class,
       'extenstion_controller' => ExtensionControllerProvider::class,
+      'metabox_controller' => MetaboxControllerProvider::class,
   );
 
   foreach( $service_providers as $service_provider => $provider_class )
