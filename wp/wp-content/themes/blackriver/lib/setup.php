@@ -28,7 +28,7 @@ function setup() {
   {
     $object = new $provider_class( $container );
     $object->register();
-  }
+    }
   $container->boot();
 
   //todo lets get the service provider setup here
