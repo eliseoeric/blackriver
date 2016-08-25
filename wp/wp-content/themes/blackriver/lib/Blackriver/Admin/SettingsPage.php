@@ -18,6 +18,7 @@ class SettingsPage extends WpSubPage {
 				'value' => array( $this->menu_slug, )
 			),
 		) );
+
 		// Set our CMB2 fields
 		$cmb->add_field( array(
 			'name' => __( 'Test Text', 'myprefix' ),
@@ -26,6 +27,7 @@ class SettingsPage extends WpSubPage {
 			'type' => 'text',
 			'default' => 'Default Text',
 		) );
+
 		$cmb->add_field( array(
 			'name'    => __( 'Test Color Picker', 'myprefix' ),
 			'desc'    => __( 'field description (optional)', 'myprefix' ),

@@ -126,7 +126,6 @@ class Container implements ArrayAccess {
 	 */
 	public function offsetGet( $offset )
 	{
-		dd( 'getting offset' );
 		//todo need to set this up to use the shared() method
 		// todo - make a get closure function that takes the $this->contents[$offset] and returns $this->contents[$offset]['concrete']
 		//Check if the $offset is a bindings, if so get the binding

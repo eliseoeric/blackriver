@@ -3,6 +3,7 @@
 namespace Roots\Sage\Setup;
 
 use Blackriver\Admin\SettingsPageProvider;
+use Blackriver\providers\ExtensionControllerProvider;
 use Blackriver\Container;
 use Roots\Sage\Assets;
 
@@ -20,7 +21,8 @@ function setup() {
   //pseudo service provider
   //todo create a service provider class
   $service_providers = array(
-      'settings_page' => SettingsPageProvider::class
+      'settings_page' => SettingsPageProvider::class,
+      'extenstion_controller' => ExtensionControllerProvider::class,
   );
 
   foreach( $service_providers as $service_provider => $provider_class )
