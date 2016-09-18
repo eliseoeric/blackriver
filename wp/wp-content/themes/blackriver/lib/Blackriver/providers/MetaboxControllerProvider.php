@@ -7,7 +7,6 @@ use Blackriver\ServiceProvider;
 class MetaboxControllerProvider extends ServiceProvider {
 
 	public function boot() {
-		dd('booted');
 	}
 
 	public function register()

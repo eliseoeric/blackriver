@@ -3,9 +3,12 @@
 namespace Roots\Sage\Setup;
 
 use Blackriver\Admin\SettingsPageProvider;
+use Blackriver\providers\ActionFilterControllerProvider;
+use Blackriver\providers\DashboardControllerProvider;
 use Blackriver\providers\ExtensionControllerProvider;
 use Blackriver\Container;
 use Blackriver\providers\MetaboxControllerProvider;
+use Blackriver\providers\ModuleServiceProvider;
 use Roots\Sage\Assets;
 
 /**
@@ -25,13 +28,15 @@ function setup() {
       'settings_page' => SettingsPageProvider::class,
       'extenstion_controller' => ExtensionControllerProvider::class,
       'metabox_controller' => MetaboxControllerProvider::class,
+      'module_controller' => ModuleServiceProvider::class,
+      'dashboard_controller' => DashboardControllerProvider::class,
+      'action_filter_controller' => ActionFilterControllerProvider::class,
   );
 
   foreach( $service_providers as $service_provider => $provider_class )
   {
     $object = new $provider_class( $container );
     $object->register();
-//    $object->boot();
   }
   $container->boot();
   //todo lets get the service provider setup here

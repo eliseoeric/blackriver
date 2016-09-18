@@ -9,7 +9,7 @@ class SettingsPageProvider extends ServiceProvider{
 
 	public function boot()
 	{
-		dd("Hello from SettingsPageProvider::boot!");
+
 	}
 	/**
 	 * Register the service provider

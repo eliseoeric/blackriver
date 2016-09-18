@@ -16,7 +16,6 @@ class MetaboxController {
 	 */
 	public function register_metabox_groups( $groups ) {
 
-
 		foreach( $groups as $metabox ) {
 			if( $metabox == '' || is_null( $metabox ) ) {
 				return;

@@ -128,6 +128,10 @@ class Container implements ArrayAccess {
 	{
 		//todo need to set this up to use the shared() method
 		// todo - make a get closure function that takes the $this->contents[$offset] and returns $this->contents[$offset]['concrete']
+		if( is_callable ( $this->bindings[ $offset ]['concrete'] ) ) {
+
+			return call_user_func( $this->bindings[ $offset ]['concrete'], $this );
+		}
 		//Check if the $offset is a bindings, if so get the binding
 		if( is_callable( $this->contents[ $offset ] ) )
 		{
